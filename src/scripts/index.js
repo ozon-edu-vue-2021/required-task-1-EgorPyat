@@ -31,8 +31,12 @@ const initialState = function () {
 const getPictures = function (page = 1, limit = 10) {
     showLoader();
     fetch(`https://picsum.photos/v2/list?page=${page};limit=${limit}`)
-        .then(function (response) {return response.json()})
-        .then(function (result) {renderPictures(result)})
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (result) {
+            renderPictures(result)
+        })
 }
 
 /**
@@ -43,8 +47,12 @@ const getPictures = function (page = 1, limit = 10) {
 const getPictureInfo = function (id = 0) {
     showLoader();
     fetch(`https://picsum.photos/id/${id}/info`)
-        .then(function (response) {return response.json()})
-        .then(function (result) {renderPopupPicture(result)})
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (result) {
+            renderPopupPicture(result)
+        })
 }
 
 /**
@@ -97,10 +105,10 @@ const renderPictures = function (list) {
         const clone = templateImageCard.content.cloneNode(true);
         const link = clone.querySelector('a');
         link.href = element.url;
-        link.dataset.id = element.id;
         const image = clone.querySelector('img');
         image.src = cropImage(element.download_url, 5);
         image.alt = element.author;
+        image.dataset.id = element.id;
         image.classList.add('preview');
         fragment.appendChild(clone)
     });
@@ -149,14 +157,17 @@ const togglePopup = function () {
  */
 const actionHandler = function (evt) {
     evt.preventDefault();
-    const nextPage = evt.currentTarget.dataset.page;
-    evt.currentTarget.dataset.page = +nextPage + 1;
-
-    if (nextPage > MAX_PAGE_IMAGES) {
+    const currentPage = Number(evt.currentTarget.dataset.page)
+    const nextPage = currentPage + 1;
+    evt.currentTarget.dataset.page = nextPage;
+    if (currentPage > MAX_PAGE_IMAGES) {
         console.warn(`WARN: You are trying to call a page that exceeds ${MAX_PAGE_IMAGES}`);
         evt.currentTarget.disabled = true;
     } else {
         getPictures(nextPage);
+        if (nextPage > MAX_PAGE_IMAGES) {
+            evt.currentTarget.disabled = true;
+        }
     }
 }
 
