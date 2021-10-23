@@ -9,7 +9,7 @@ body {
 img {
     width: 100%;
     max-width: 100%;
-    display: bloсk;
+    display: block;
 }
 
 a {
@@ -28,12 +28,17 @@ button {
     transition: 0.2s background-color;
 }
 
-button:disabled {
-    background-color: #CFD8DC;
+button.fetch {
+    background-color: #4CAF50;
+    border-radius: 4px;
+    padding: 10px;
+    width: 170px;
+    align-self: center;
 }
 
-button:disabled:hover {
+button:disabled {
     background-color: #CFD8DC;
+    cursor: default;
 }
 
 main {
@@ -51,15 +56,10 @@ main {
 
 /* Action style */
 .action {
-    background-color: #66BB6A;
     font-size: 16px;
     padding: 10px 20px;
     border-radius: 6px;
     margin: 10px 0;
-}
-
-.action:hover {
-    background-color: #4CAF50;
 }
 
 /* Images style */
@@ -126,7 +126,6 @@ figcaption {
     bottom: 0;
     right: 0;
     background-color: rgba(33, 33, 33, 0.5);
-    z-index: -1;
 }
 
 .popup.open {
